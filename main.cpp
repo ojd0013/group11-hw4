@@ -19,9 +19,16 @@ int current_game_total(Bowling_Frame * first_frame)
 	return game_total;	
 }
 
-//void printGame(Bowling_Frame * firstFrame, int playerNum){
-	
-//}
+void printGame(Bowling_Frame * firstFrame, int playerNum){
+	Bowling_Frame * traverse = firstFrame;
+	while(traverse){
+		cout << "Frame " << traverse->frame_num() << ": " << endl
+		     << " Score 1: " << traverse->score1() << endl
+		     << " Score 2: " << traverse->score2() << endl;
+		traverse = traverse->next_frame();
+	}
+	cout << endl << "Total Game Score for player " << playerNum << ": " << current_game_total(firstFrame) << endl << endl;
+}
 
 int main(int argc, char * argv[])
 {
