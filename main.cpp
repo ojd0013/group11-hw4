@@ -68,7 +68,7 @@ int main(int argc, char * argv[])
 	}
 
 	for(int p = 0; p < num_players; p++){
-		for(int roll = 0; roll < framesPerGame * 2; roll++){
+		for(int roll = 0; roll < framesPerGame * 2 + 1; roll++){
 			players[p]->update_scores();
 		}
 	}
