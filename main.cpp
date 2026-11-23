@@ -20,12 +20,13 @@ int current_game_total(Bowling_Frame * first_frame)
 	return game_total;	
 }
 
-int main()
+// the bowling_frame pointers with 1 element for each playa
+// void print_game(
+
+int main(int argc, char * argv[])
 {
 	//make frames
-	Bowling_Frame * f1 = new Bowling_Frame(1);
-	Bowling_Frame * f2 = new Bowling_Frame(2);
-	Bowling_Frame * f3 = new Bowling_Frame(3);
+	const int framesPerGame = 10;
 
 	//link frames together
 	f1->next_frame(f2);
