@@ -155,6 +155,9 @@ void Bowling_Frame::update_scores()
 				{
 					frame_score_ += next_frame_->score2_;
 				}
+				else if(next_frame_->next_frame_ && next_frame_->next_frame_->roll_one_){
+					frame_score_ += next_frame_->next_frame_->score1_;
+				}
 			}
 			else if (next_frame_->roll_two_)
 			{
