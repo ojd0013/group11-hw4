@@ -24,8 +24,6 @@ Bowling_Frame::Bowling_Frame(int fnum)
 
 Bowling_Frame::~Bowling_Frame()
 {
-	free(next_frame_);
-	free(prev_frame_);
 }
 
 Bowling_Frame* Bowling_Frame::next_frame() { return next_frame_; }
