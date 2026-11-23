@@ -11,7 +11,6 @@ int current_game_total(Bowling_Frame * first_frame)
 {
 	Bowling_Frame * temp = first_frame;
 	int game_total = 0;
-	int temp_total = 0;
 	while(temp)
 	{
 		game_total += temp->frame_score();
@@ -20,59 +19,64 @@ int current_game_total(Bowling_Frame * first_frame)
 	return game_total;	
 }
 
-// the bowling_frame pointers with 1 element for each playa
-// void print_game(
+//void printGame(Bowling_Frame * firstFrame, int playerNum){
+	
+//}
 
 int main(int argc, char * argv[])
 {
 	//make frames
 	const int framesPerGame = 10;
 
-	//link frames together
-	f1->next_frame(f2);
-
-	f2->next_frame(f3);
-	f2->prev_frame(f1);
-
-	f3->prev_frame(f2);	
-
-	//set frame scores	
-	f1->update_scores();
-	f1->update_scores();
-	cout << "Frame 1 Total: " << current_game_total(f1) << endl;
-
-	f1->update_scores();
-	f1->update_scores();
-	cout << "Frame 1 and 2 Total: " << current_game_total(f1) << endl;
-
-
-	f1->update_scores();
-	f1->update_scores();
-	cout << "Frame 1,2,and 3 Total: " << current_game_total(f1) << endl;
-
-	//print values
-	cout << "Frame " << f1->frame_num() << ": " << endl
-		 << " Score 1: " << f1->score1() << endl
-		 << " Score 2: " << f1->score2() << endl;
-
-	cout << "Frame " << f2->frame_num() << ": " << endl
-	     << " Score 1: " << f2->score1() << endl
-		 << " Score 2: " << f2->score2() << endl;
-
-	cout << "Frame " << f3->frame_num() << ": " << endl
-	     << " Score 1: " << f3->score1() << endl
-		 << " Score 2: " << f3->score2() << endl;
-
-	//iterate through linked list and print values
-	Bowling_Frame * traverse = f1;
-	
-	while(traverse)
-	{
-		cout << "Frame " << traverse->frame_num() << ": " << endl
-		 	 << " Score 1: " << traverse->score1() << endl
-		 	 << " Score 2: " << traverse->score2() << endl;
-
-		traverse = traverse->next_frame();
+	if(argc != 2){
+		cout << "Usage: " << argv[0] << " <num_players>" << endl;
+		return 1;
 	}
+	int num_players = stoi(argv[1]);
+	if(num_players <= 0){
+		cout << "Usage: " << argv[0] << " <num_players>" << endl;
+		cout << "<num_players> must be a positive int" << endl;
+		return 1;
+	}
+	cout << "Player count is: " << num_players << endl;
+// the bowling_frame pointers with 1 element for each playa
+	Bowling_Frame ** players = new Bowling_Frame*[num_players];
+
+	for(int p = 0; p < num_players; p++){
+		Bowling_Frame * prev = nullptr;
+		for(int f = 1; f <= framesPerGame; f++){
+			Bowling_Frame * current = new Bowling_Frame(f);
+			if(f == 1){
+				players[p] = current; // first frame  
+			}
+			else{
+				prev->next_frame(current);
+				current->prev_frame(prev);   
+			}
+			prev = current;
+		}
+	}
+
+	for(int p = 0; p < num_players; p++){
+		for(int roll = 0; roll < framesPerGame * 2; roll++){
+			players[p]->update_scores();
+		}
+	}
+
+	for(int p = 0; p < num_players; p++){
+		printGame(players[p], p + 1);
+	}
+
+	for(int p = 0; p < num_players; p++){
+		Bowling_Frame * current = players[p];
+		while(current){
+			Bowling_Frame * next = current->next_frame();
+			delete current;
+			current = next;
+		}
+	}
+	delete [] players;
+
+	return 0;
 
 }
