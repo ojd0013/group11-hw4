@@ -26,6 +26,9 @@ void printGame(Bowling_Frame * firstFrame, int playerNum){
 		     << " Score 1: " << traverse->score1() << endl
 		     << " Score 2: " << traverse->score2() << endl;
 		traverse = traverse->next_frame();
+		if(traverse->frame_num() == 10 && (traverse->strike() || traverse->spare())){
+			cout << " Score 3: " << traverse->score3() << endl;
+		}
 	}
 	cout << endl << "Total Game Score for player " << playerNum << ": " << current_game_total(firstFrame) << endl << endl;
 }
